@@ -53,7 +53,7 @@
             background-color: white;
         }
     </style>
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript">
         // Pause the video when the modal is closed
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
@@ -73,8 +73,8 @@
 
             // Gets Movie info from IMDB.
             resetMovieInfo();
-            console.log($(this).attr('movie-id'));
-            var infoUrl = getMovieInfoUrl($(this).attr('movie-id'));
+            console.log($(this).attr('title'));
+            var infoUrl = getMovieInfoUrl($(this).attr('title'));
             httpGetAsync(infoUrl, showMovieInfo);
 
         });
@@ -87,14 +87,14 @@
 
         // Resets movie info texts.
         function resetMovieInfo() {
-            $("#release-date").empty();
-            $("#actors").empty();
-            $("#imdb-rating").empty();
+            $("#release-date").empty().append("Loading...");
+            $("#actors").empty().append("Loading...");
+            $("#imdb-rating").empty().append("Loading...");
         }
 
         // The callback function to fill in movie info from response text.
         function showMovieInfo(responseText) {
-            info = JSON.parse(responseText);
+            var info = JSON.parse(responseText);
             console.log(info);
             $("#release-date").empty().append(info.Released);
             $("#actors").empty().append(info.Actors);
@@ -110,7 +110,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&amp;h=24" alt="close"/>
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
@@ -141,18 +141,18 @@
     </div>
     <div class="container">
       
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ZU3Xban0Y6A" movie-id="The Intern"data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyNjE5NjI5OF5BMl5BanBnXkFtZTgwNzYzMzU3NjE@._V1_SX300.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ZU3Xban0Y6A" title="The Intern" data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyNjE5NjI5OF5BMl5BanBnXkFtZTgwNzYzMzU3NjE@._V1_SX300.jpg" width="220" height="342" alt="The Intern">
     <h2>The Intern</h2>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ej3ioOneTy8" movie-id="The Martian"data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ej3ioOneTy8" title="The Martian" data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg" width="220" height="342" alt="The Martian">
     <h2>The Martian</h2>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="T89tvJTCohA" movie-id="Batman v Superman Dawn of Justice"data-toggle="modal" data-target="#trailer">
-    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyMTIxNzE1M15BMl5BanBnXkFtZTgwOTU0ODQ4MTE@._V1_SX300.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="T89tvJTCohA" title="Batman v Superman Dawn of Justice" data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyMTIxNzE1M15BMl5BanBnXkFtZTgwOTU0ODQ4MTE@._V1_SX300.jpg" width="220" height="342" alt="Batman v Superman Dawn of Justice">
     <h2>Batman v Superman Dawn of Justice</h2>
 </div>
 

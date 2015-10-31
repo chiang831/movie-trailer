@@ -59,7 +59,7 @@ main_page_head = '''
             background-color: white;
         }
     </style>
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript">
         // Pause the video when the modal is closed
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
@@ -79,8 +79,8 @@ main_page_head = '''
 
             // Gets Movie info from IMDB.
             resetMovieInfo();
-            console.log($(this).attr('movie-id'));
-            var infoUrl = getMovieInfoUrl($(this).attr('movie-id'));
+            console.log($(this).attr('title'));
+            var infoUrl = getMovieInfoUrl($(this).attr('title'));
             httpGetAsync(infoUrl, showMovieInfo);
 
         });
@@ -93,14 +93,14 @@ main_page_head = '''
 
         // Resets movie info texts.
         function resetMovieInfo() {
-            $("#release-date").empty();
-            $("#actors").empty();
-            $("#imdb-rating").empty();
+            $("#release-date").empty().append("Loading...");
+            $("#actors").empty().append("Loading...");
+            $("#imdb-rating").empty().append("Loading...");
         }
 
         // The callback function to fill in movie info from response text.
         function showMovieInfo(responseText) {
-            info = JSON.parse(responseText);
+            var info = JSON.parse(responseText);
             console.log(info);
             $("#release-date").empty().append(info.Released);
             $("#actors").empty().append(info.Actors);
@@ -120,7 +120,7 @@ main_page_content = '''
       <div class="modal-dialog">
         <div class="modal-content">
           <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&amp;h=24" alt="close"/>
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
@@ -159,8 +159,8 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" movie-id="{movie_title}"data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" title="{movie_title}" data-toggle="modal" data-target="#trailer">
+    <img src="{poster_image_url}" width="220" height="342" alt="{movie_title}">
     <h2>{movie_title}</h2>
 </div>
 '''
