@@ -8,8 +8,10 @@
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="movie_trailer.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="movie_info.js"></script>
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
@@ -68,6 +70,13 @@
               'src': sourceUrl,
               'frameborder': 0
             }));
+
+            // Gets Movie info from IMDB.
+            resetMovieInfo();
+            console.log($(this).attr('movie-id'));
+            var infoUrl = getMovieInfoUrl($(this).attr('movie-id'));
+            httpGetAsync(infoUrl, showMovieInfo);
+
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -75,6 +84,23 @@
             $(this).next("div").show("fast", showNext);
           });
         });
+
+        // Resets movie info texts.
+        function resetMovieInfo() {
+            $("#release-date").empty();
+            $("#actors").empty();
+            $("#imdb-rating").empty();
+        }
+
+        // The callback function to fill in movie info from response text.
+        function showMovieInfo(responseText) {
+            info = JSON.parse(responseText);
+            console.log(info);
+            $("#release-date").empty().append(info.Released);
+            $("#actors").empty().append(info.Actors);
+            $("#imdb-rating").empty().append(info.imdbRating);
+        }
+
     </script>
 </head>
 
@@ -88,6 +114,17 @@
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
+        </div>
+        <div id="movie-info-container">
+            <div style="text-align:center;">
+                <div class="movie-info-text">Release Date: </div> <div class="movie-info-text" id='release-date'></div>
+            </div>
+            <div style="text-align:center;">
+                <div class="movie-info-text">Actors: </div><div class="movie-info-text" id='actors'></div>
+            </div>
+            <div style="text-align:center;">
+                <div class="movie-info-text">IMDB Rating: </div><div class="movie-info-text" id='imdb-rating'></div>
+            </div>
         </div>
       </div>
     </div>
@@ -104,18 +141,18 @@
     </div>
     <div class="container">
       
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ZU3Xban0Y6A" data-toggle="modal" data-target="#trailer">
-    <img src="http://www.impawards.com/2015/posters/intern_xlg.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ZU3Xban0Y6A" movie-id="The Intern"data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyNjE5NjI5OF5BMl5BanBnXkFtZTgwNzYzMzU3NjE@._V1_SX300.jpg" width="220" height="342">
     <h2>The Intern</h2>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ej3ioOneTy8" data-toggle="modal" data-target="#trailer">
-    <img src="https://maggielieu.files.wordpress.com/2015/10/maxresdefault.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="ej3ioOneTy8" movie-id="The Martian"data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg" width="220" height="342">
     <h2>The Martian</h2>
 </div>
 
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="T89tvJTCohA" data-toggle="modal" data-target="#trailer">
-    <img src="http://masterherald.com/wp-content/uploads/2015/06/Batman-v-Superman-Dawn-of-Justice.jpg" width="220" height="342">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="T89tvJTCohA" movie-id="Batman v Superman Dawn of Justice"data-toggle="modal" data-target="#trailer">
+    <img src="http://ia.media-imdb.com/images/M/MV5BMTUyMTIxNzE1M15BMl5BanBnXkFtZTgwOTU0ODQ4MTE@._V1_SX300.jpg" width="220" height="342">
     <h2>Batman v Superman Dawn of Justice</h2>
 </div>
 
