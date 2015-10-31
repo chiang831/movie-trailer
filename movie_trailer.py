@@ -1,6 +1,7 @@
 import fresh_tomatoes
 
 class Movie(object):
+  """Contains basic attributes for a movie trailer."""
   def __init__(self, title, image_url, video_url):
     self.trailer_youtube_url = video_url
     self.title = title
