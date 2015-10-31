@@ -14,8 +14,10 @@ main_page_head = '''
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="movie_trailer.css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="movie_info.js"></script>
     <style type="text/css" media="screen">
         body {
             padding-top: 80px;
@@ -74,6 +76,13 @@ main_page_head = '''
               'src': sourceUrl,
               'frameborder': 0
             }));
+
+            // Gets Movie info from IMDB.
+            resetMovieInfo();
+            console.log($(this).attr('movie-id'));
+            var infoUrl = getMovieInfoUrl($(this).attr('movie-id'));
+            httpGetAsync(infoUrl, showMovieInfo);
+        
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
@@ -81,6 +90,23 @@ main_page_head = '''
             $(this).next("div").show("fast", showNext);
           });
         });
+
+        // Resets movie info texts.
+        function resetMovieInfo() {
+            $("#release-date").empty();
+            $("#actors").empty();
+            $("#imdb-rating").empty();
+        }
+
+        // The callback function to fill in movie info from response text.
+        function showMovieInfo(responseText) {
+            info = JSON.parse(responseText);
+            console.log(info);
+            $("#release-date").empty().append(info.Released);
+            $("#actors").empty().append(info.Actors);
+            $("#imdb-rating").empty().append(info.imdbRating);
+        }
+
     </script>
 </head>
 '''
@@ -98,6 +124,17 @@ main_page_content = '''
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
+        </div>
+        <div id="movie-info-container">
+            <div style="text-align:center;">
+                <div class="movie-info-text">Release Date: </div> <div class="movie-info-text" id='release-date'></div>
+            </div>
+            <div style="text-align:center;">
+                <div class="movie-info-text">Actors: </div><div class="movie-info-text" id='actors'></div>
+            </div>
+            <div style="text-align:center;">
+                <div class="movie-info-text">IMDB Rating: </div><div class="movie-info-text" id='imdb-rating'></div>
+            </div>
         </div>
       </div>
     </div>
@@ -122,7 +159,7 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" movie-id="{movie_title}"data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h2>{movie_title}</h2>
 </div>
