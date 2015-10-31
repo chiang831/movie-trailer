@@ -1,3 +1,4 @@
+/* Gets omdb API query URL like http://www.omdbapi.com/?i=&t=The+Martian */
 function getMovieInfoUrl(id) {
     search_id = id.split(' ').join('+');
     search_url = "http://www.omdbapi.com/?i=&t=" + search_id;
