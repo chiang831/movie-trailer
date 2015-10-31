@@ -82,7 +82,7 @@ main_page_head = '''
             console.log($(this).attr('movie-id'));
             var infoUrl = getMovieInfoUrl($(this).attr('movie-id'));
             httpGetAsync(infoUrl, showMovieInfo);
-        
+
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {

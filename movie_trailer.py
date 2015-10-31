@@ -6,6 +6,7 @@ class Movie(object):
     self.title = title
     self.poster_image_url = image_url
 
+# A list of movies to show on the page.
 movies = [
    Movie(
        title='The Intern',
